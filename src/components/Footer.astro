@@ -12,7 +12,7 @@ import config from "../config.json";
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
       <div class="flex flex-col items-start">
         <Image src={logoImg} alt="logo" class="w-16 bg-white rounded-md mb-2" />
-        <p class="text-sm">Cross Country Water Tank Cleaning</p>
+        <p class="text-sm">{config.businessName}</p>
       </div>
 
       <div>
@@ -86,7 +86,7 @@ import config from "../config.json";
           target="_blank"
           rel="noopener noreferrer"
         >
-          Astro Media
+      {config.businessName}
         </a>
         <Image
           class="w-5"
