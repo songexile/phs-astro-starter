@@ -1,0 +1,235 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+import config from "../config.json";
+
+import heroImg from "../assets/images/hero.jpg";
+import servicepic1 from "../assets/images/servicepic1.png";
+import servicepic2 from "../assets/images/servicepic2.png";
+import servicepic3 from "../assets/images/servicepic3.png";
+import servicepic4 from "../assets/images/servicepic4.png";
+import waterdrain from "../assets/images/waterdrain2.png";
+import heroBg from "../assets/images/cozy_bg.gif";
+import watertowericon from "../assets/images/icon/water-tower.png";
+import Form from "../components/Form.astro";
+import ServiceCard from "../components/ServiceCard.astro";
+import Image from "astro/components/Image.astro";
+
+import { Cloudinary } from "@cloudinary/url-gen";
+import { scale } from "@cloudinary/url-gen/actions/resize";
+
+const services = [
+  {
+    iconSrc: watertowericon.src,
+    title: "STANDARD TANK CLEAN",
+    subtitle: "Sludge Vacuum + Antibacterial Dose",
+    features: [
+      "Removal of bottom sludge and sediment using a heavy duty trash pump",
+      "Minimal water loss",
+      "An antibacterial dose of food grade hydrogen peroxide is added once the vacuuming has been completed.",
+      "This ensures that all viruses and bacteria in the water are eliminated.",
+    ],
+    buttonText: "Book Now",
+  },
+  {
+    iconSrc: watertowericon.src,
+    title: "PREMIUM TANK CLEAN",
+    subtitle: "Comprehensive Cleaning + Advanced Treatment",
+    features: [
+      "Removal of bottom sludge and sediment using a heavy duty trash pump",
+      "Minimal water loss",
+      "An antibacterial dose of food grade hydrogen peroxide is added once the vacuuming has been completed. This ensures that all viruses and bacteria in the water are eliminated.",
+      "The water is then filtered (approx 30,000L) through our filtration system for 30-60 minutes. Cross Country uses new fresh clean filters at each site.",
+      "Finally, the interior of the tank is fogged to sterilise all bare surfaces above the water line",
+    ],
+    buttonText: "Book Now",
+  },
+  {
+    iconSrc: watertowericon.src,
+    title: "EXECUTIVE TANK CLEAN",
+    subtitle: "Comprehensive Cleaning + Advanced Treatment",
+    features: [
+      "All bottom sediment is vacuumed to waste, the tank is drained, all surfaces are scrubbed and sterilised.",
+      "This requires two operators on site to satisfy health and safety requirements. One operator will enter the tank, and perform the service as explained above for our premium clean. On the odd occasion with our executive clean, due to excessive fouling, it is necessary to scrub/wash the tank bottom and sides, which generally requires draining the tank. This requires purchasing replacement water, arranged by us or the client.",
+    ],
+    buttonText: "Book Now",
+  },
+  {
+    iconSrc: watertowericon.src,
+    title: "FILTER REPLACEMENT/OTHER SERVICES",
+    subtitle: "",
+    features: [
+      "We replace all common water filters on most filtration systems and advise on new installations.",
+      "Site consultation",
+      "Priority client scheduling",
+      "Downpipe flushing/sterilization",
+      "In tank groundwater purification",
+      "Water testing services",
+    ],
+    buttonText: "Book Now",
+  },
+];
+
+const faqData = [
+  {
+    question: "How much water do you use?",
+    answer:
+      "This depends on what we find when we access your water tank. Generally we use about 10% of your water when cleaning a standard house tank.",
+  },
+  {
+    question: "How often should I clean my tank?",
+    answer:
+      "Tanks should be inspected annually. As a general rule of thumb, to maintain a healthy tank and water, a tank clean every 2-5 years is recommended.",
+  },
+  {
+    question: "Do you clean the sides?",
+    answer:
+      "During our standard and premium cleaning service, we do not brush the tank side walls, however, the addition of the sanitiser solution neutralises side growth and/or bacteria.",
+  },
+  {
+    question: "What if my water is discoloured from leaf tannins?",
+    answer:
+      "Removing the bottom sediment and sterilising the water will make it safe, however the colour will remain until diluted by further rains.",
+  },
+  {
+    question: "What if my water tank has clay/dirt/ground water in suspension?",
+    answer:
+      "We are able to use a clarifying agent to settle the sediment out of solution, and then vacuum the sediment to waste. (Occurs additional charges)",
+  },
+  {
+    question: "What happens to the wastewater/sludge?",
+    answer:
+      "We work to discharge the sediment to your garden or lawn/paddock to minimise sediments entering waterways.",
+  },
+  {
+    question: "How do I know what size my tank is?",
+    answer:
+      "Most common concrete and plastic household water tanks are between 24000 and 30000 litres.",
+  },
+  {
+    question:
+      "What regular antibacterial treatments do you recommend for water tanks?",
+    answer:
+      "Your operator will assist with advice. We recommend Pour & Go (available from Mitre 10) and Geosil150 for a longer lasting treatment. (available online)",
+  },
+  {
+    question: "Where are you based?",
+    answer:
+      "Our operators are fully mobile across New Zealand, with a home base in Hunua, Auckland. We regularly stay close to our clients at local campgrounds and air b&b's.",
+  },
+  {
+    question: "Do you enter the tank?",
+    answer:
+      "We predominantly do our standard and premium tank cleaning from outside the tank. However if your service is for an executive clean, we provide two operators to satisfy health and safety regulations, and enter the tank.",
+  },
+  {
+    question: "How do I know if my tank needs cleaning?",
+    answer:
+      "We offer an inspection service. However, if you have symptoms of tummy upsets, your water smells while showering, or poor tasting water, the chances are your tank or feed piping needs some attention.",
+  },
+];
+
+// Create a Cloudinary instance and set your cloud name.
+const cld = new Cloudinary({
+  cloud: {
+    cloudName: import.meta.env.CLOUDINARY_CLOUD_NAME,
+  },
+});
+
+const heroVideo = cld.video("cross-country-tank-cleaning/hero");
+heroVideo.resize(scale().width(1100));
+const heroVideoURL = heroVideo.toURL();
+---
+
+<Layout title={config.businessName}>
+  <section class="h-screen max-md:h-96 relative w-full">
+    <Image
+      src={heroBg}
+      class="w-full h-full object-cover absolute top-0 left-0"
+      alt="Background image"
+    />
+    <div
+      class="absolute inset-0 bg-black bg-opacity-40 flex flex-col justify-center items-start p-8"
+    >
+      <div class="relative h-44 w-full">
+        <h1
+          class="text-white text-4xl md:text-5xl font-bold mb-4 max-w-2xl absolute top-0 left-0"
+          id="heroText"
+        >
+          PHS LETS GO!
+        </h1>
+        <h1
+          class="text-white text-4xl md:text-5xl font-bold mb-4 max-w-2xl absolute top-0 left-0 opacity-0"
+          id="heroTextMaori"
+        >
+        LETS GET IT!!!!
+        </h1>
+      </div>
+    </div>
+  </section>
+  <section id="services" class="py-16 pb-32">
+    <div class="max-w-screen-xl mx-auto flex items-center flex-col gap-8 px-4">
+      <h1
+        class="font-bold text-6xl max-md:text-4xl text-blue-600 col-span-2 max-md:col-span-full"
+      >
+        Our Services
+      </h1>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {services.map((service) => <ServiceCard {...service} />)}
+      </div>
+      <h1 class="text-3xl text-light">
+        Call <a
+          target="_blank"
+          href={config.support[0].url}
+          class="text-primary"
+          >{config.support[0].name}
+        </a>
+      </h1>
+    </div>
+  </section>
+ 
+ 
+</Layout>
+
+<script>
+  import gsap from "gsap";
+  import SplitType from "split-type";
+
+  const heroTextChars = new SplitType("#heroText", { types: "lines" });
+  const heroTextMaoriChars = new SplitType("#heroTextMaori", {
+    types: "lines",
+  });
+
+  const heroTl = gsap.timeline({ repeat: -1 });
+  heroTl
+    .fromTo(
+      heroTextChars.lines,
+      { opacity: 0, yPercent: 100 },
+      { opacity: 1, yPercent: 0, stagger: 0.1, duration: 0.5 }
+    )
+    .to(heroTextChars.lines, {
+      yPercent: -100,
+      opacity: 0,
+      stagger: 0.1,
+      duration: 0.5,
+      delay: 5,
+    })
+    .to("#heroTextMaori", { opacity: 1 })
+    .fromTo(
+      heroTextMaoriChars.lines,
+      { opacity: 0, yPercent: 100 },
+      {
+        yPercent: 0,
+        opacity: 1,
+        stagger: 0.1,
+        duration: 0.5,
+      }
+    )
+    .to(heroTextMaoriChars.lines, {
+      yPercent: -100,
+      opacity: 0,
+      stagger: 0.1,
+      duration: 0.5,
+      delay: 5,
+    });
+</script>
